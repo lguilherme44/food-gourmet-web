@@ -12,7 +12,7 @@ Features disponíveis e futuras:
 [ ] - Adicionar responsividade
 [ ] - Criar página de autenticação
 
-Quer particiar para treinar os conhecimentos? chama ai!
+Quer particiar para treinar seus conhecimentos? chama ai!
 [Guilherme Lellis](mailto:lguilherme44@gmail.com)
 
 

@@ -36,7 +36,7 @@ export const Form = styled(Unform)`
     .icon {
       display: flex;
       padding: 16px 16px;
-      background: #41c900;
+      background: rgb(129, 165, 50);
       border-radius: 0 8px 8px 0;
       margin: 0 auto;
     }

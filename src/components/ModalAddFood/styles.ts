@@ -22,7 +22,7 @@ export const Form = styled(Unform)`
     font-weight: 600;
     border-radius: 8px;
     border: 0;
-    background: #a72222;
+    background: rgb(155, 197, 61);
     color: #fff;
 
     display: flex;
@@ -36,7 +36,7 @@ export const Form = styled(Unform)`
     .icon {
       display: flex;
       padding: 16px 16px;
-      background: #961e1e;
+      background: rgb(155, 197, 61);
       border-radius: 0 8px 8px 0;
       margin: 0 auto;
     }

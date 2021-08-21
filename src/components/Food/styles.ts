@@ -22,11 +22,11 @@ export const Container = styled.div`
     transition: 0.3s opacity;
     text-align: center;
 
-    ${(props: ContainerProps) =>
+    /* ${(props: ContainerProps) =>
       !props.available &&
       css`
         opacity: 0.3;
-      `};
+      `}; */
 
     img {
       pointer-events: none;

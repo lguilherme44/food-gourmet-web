@@ -3,6 +3,7 @@ import { Container } from "./styles";
 import api from "../../services/api";
 import { useState } from "react";
 import FoodProps from "../../types/FoodProps";
+import toast from "react-hot-toast";
 
 export default function Food({
   food,
@@ -19,6 +20,9 @@ export default function Food({
     });
 
     setIsAvaliable(!isAvaliable);
+    !isAvaliable
+      ? toast.success("Prato ativado")
+      : toast.error("Prato desativado");
   };
 
   const setEditingFood = () => {

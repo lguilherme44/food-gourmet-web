@@ -1,18 +1,20 @@
 import React, { useRef } from "react";
-// import api from "../../services/api";
 import * as Yup from "yup";
-import toast from "react-hot-toast";
 import { FormHandles, SubmitHandler } from "@unform/core";
 import { Form, Container, Main } from "./styles";
-import Input from "../../components/Input";
 import { FiLogIn } from "react-icons/fi";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { HiOutlineMail } from "react-icons/hi";
+import { useAuth } from "../../context/hooks/useAuth";
 import { useHistory } from "react-router-dom";
+import Input from "../../components/Input";
+import ReactLoading from "react-loading";
+import toast from "react-hot-toast";
 
 const Login: React.FC = () => {
-  const formRef = useRef<FormHandles>(null);
   const history = useHistory();
+  const formRef = useRef<FormHandles>(null);
+  const { handleLogin, isLoading } = useAuth();
 
   const handleSubmit: SubmitHandler = async (data) => {
     try {
@@ -24,6 +26,8 @@ const Login: React.FC = () => {
       await schema.validate(data, {
         abortEarly: false,
       });
+
+      handleLogin(data.email, data.password);
 
       history.push("/admin");
     } catch (err) {
@@ -46,12 +50,25 @@ const Login: React.FC = () => {
             placeholder="Password"
             icon={RiLockPasswordLine}
           />
-          <button type="submit" data-testid="add-food-button">
-            <p className="text">Entrar</p>
-            <div className="icon">
-              <FiLogIn size={24} />
-            </div>
-          </button>
+
+          {isLoading ? (
+            <ReactLoading
+              type={"spinningBubbles"}
+              color={"#fff"}
+              height={35}
+              width={35}
+              // className="loading-page"
+            />
+          ) : (
+            <>
+              <button type="submit" data-testid="add-food-button">
+                <p className="text">Entrar</p>
+                <div className="icon">
+                  <FiLogIn size={24} />
+                </div>
+              </button>
+            </>
+          )}
         </Form>
       </Main>
     </Container>

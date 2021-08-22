@@ -1,13 +1,15 @@
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, BrowserRouter } from "react-router-dom";
 
 import Login from "../pages/Login";
-import Dashboard from "../pages/Dashboard";
+import Admin from "../pages/Admin";
 
 const Routes = () => (
-  <Switch>
-    <Route path="/" exact component={Login} />
-    <Route path="/admin" component={Dashboard} />
-  </Switch>
+  <BrowserRouter>
+    <Switch>
+      <Route path="/" exact component={Login} />
+      <Route path="/admin" component={Admin} />
+    </Switch>
+  </BrowserRouter>
 );
 
 export default Routes;

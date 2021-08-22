@@ -8,9 +8,11 @@ import Input from "../../components/Input";
 import { FiLogIn } from "react-icons/fi";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { HiOutlineMail } from "react-icons/hi";
+import { useHistory } from "react-router-dom";
 
 const Login: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+  const history = useHistory();
 
   const handleSubmit: SubmitHandler = async (data) => {
     try {
@@ -22,6 +24,8 @@ const Login: React.FC = () => {
       await schema.validate(data, {
         abortEarly: false,
       });
+
+      history.push("/admin");
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         err.inner.forEach((error) => {

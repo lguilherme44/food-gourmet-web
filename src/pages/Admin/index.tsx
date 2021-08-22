@@ -9,7 +9,7 @@ import IFood from "../../types/IFood";
 import toast from "react-hot-toast";
 import ReactLoading from "react-loading";
 
-export default function Dashboard() {
+export default function Admin() {
   const [foods, setFoods] = useState<IFood[]>([]);
   const [editingFood, setEditingFood] = useState<IFood>({} as IFood);
   const [modalOpen, setModalOpen] = useState(false);

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { createContext, ReactNode } from "react";
-
 import api from "../services/api";
 
 interface AuthContextProps {
@@ -9,6 +8,7 @@ interface AuthContextProps {
 
 interface AuthContextType {
   handleLogin: (email: string, password: string) => Promise<void>;
+  handleLogout: () => void;
   isLogged: boolean;
   isLoading: boolean;
 }
@@ -31,8 +31,14 @@ export function AuthProvider({ children }: AuthContextProps) {
     }
   };
 
+  const handleLogout = async () => {
+    localStorage.clear();
+  };
+
   return (
-    <AuthContext.Provider value={{ handleLogin, isLogged, isLoading }}>
+    <AuthContext.Provider
+      value={{ handleLogin, isLogged, isLoading, handleLogout }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -7,22 +7,28 @@ import { FoodsContainer } from "./styles";
 import { useState, useEffect } from "react";
 import IFood from "../../types/IFood";
 import toast from "react-hot-toast";
+import ReactLoading from "react-loading";
 
 export default function Dashboard() {
   const [foods, setFoods] = useState<IFood[]>([]);
   const [editingFood, setEditingFood] = useState<IFood>({} as IFood);
   const [modalOpen, setModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
+
     async function getFoods() {
       const { data } = await api.get("/foods");
 
       if (data) {
+        // setLoading(false);
         setFoods(data);
       }
     }
     getFoods();
+    // setLoading(false);
   }, []);
 
   const handleAddFood = async (
@@ -111,17 +117,27 @@ export default function Dashboard() {
         handleUpdateFood={handleUpdateFood}
       />
 
-      <FoodsContainer data-testid="foods-list">
-        {foods &&
-          foods.map((food) => (
-            <Food
-              key={food.id}
-              food={food}
-              handleDelete={handleDeleteFood}
-              handleEditFood={handleEditFood}
-            />
-          ))}
-      </FoodsContainer>
+      {isLoading ? (
+        <ReactLoading
+          type={"spinningBubbles"}
+          color={"#131416"}
+          height={35}
+          width={35}
+          className="loading-page"
+        />
+      ) : (
+        <FoodsContainer data-testid="foods-list">
+          {foods &&
+            foods.map((food) => (
+              <Food
+                key={food.id}
+                food={food}
+                handleDelete={handleDeleteFood}
+                handleEditFood={handleEditFood}
+              />
+            ))}
+        </FoodsContainer>
+      )}
     </>
   );
 }

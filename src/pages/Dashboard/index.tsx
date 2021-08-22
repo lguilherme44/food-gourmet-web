@@ -14,7 +14,7 @@ export default function Dashboard() {
   const [editingFood, setEditingFood] = useState<IFood>({} as IFood);
   const [modalOpen, setModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -23,12 +23,12 @@ export default function Dashboard() {
       const { data } = await api.get("/foods");
 
       if (data) {
-        // setLoading(false);
+        setLoading(false);
         setFoods(data);
       }
     }
     getFoods();
-    // setLoading(false);
+    setLoading(false);
   }, []);
 
   const handleAddFood = async (

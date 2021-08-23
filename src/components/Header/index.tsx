@@ -1,9 +1,11 @@
 import { FiPlusSquare } from "react-icons/fi";
-import HeaderProps from "../../types/HeaderProps";
 import { Container } from "./styles";
 import { RiShutDownLine } from "react-icons/ri";
+import HeaderProps from "../../types/HeaderProps";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function Header({ openModal }: HeaderProps) {
+  const { handleLogout } = useAuth();
   return (
     <Container>
       <header>
@@ -14,9 +16,9 @@ export default function Header({ openModal }: HeaderProps) {
           </div>
         </button>
 
-        <button>
+        <button onClick={handleLogout}>
           <div className="icon">
-            <RiShutDownLine size={24} color="#c72828" />
+            <RiShutDownLine size={24} color="#fff" />
           </div>
         </button>
       </header>

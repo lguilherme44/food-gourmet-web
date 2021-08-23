@@ -5,7 +5,7 @@ import { Form, Container, Main } from "./styles";
 import { FiLogIn } from "react-icons/fi";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { HiOutlineMail } from "react-icons/hi";
-import { useAuth } from "../../context/hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 import { useHistory } from "react-router-dom";
 import Input from "../../components/Input";
 import ReactLoading from "react-loading";
@@ -47,6 +47,7 @@ const Login: React.FC = () => {
           <Input name="email" placeholder="E-mail" icon={HiOutlineMail} />
           <Input
             name="password"
+            type="password"
             placeholder="Password"
             icon={RiLockPasswordLine}
           />
@@ -57,7 +58,6 @@ const Login: React.FC = () => {
               color={"#fff"}
               height={35}
               width={35}
-              // className="loading-page"
             />
           ) : (
             <>

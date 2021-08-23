@@ -8,8 +8,10 @@ import { useState, useEffect } from "react";
 import IFood from "../../types/IFood";
 import toast from "react-hot-toast";
 import ReactLoading from "react-loading";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function Admin() {
+  const { tokenUser } = useAuth();
   const [foods, setFoods] = useState<IFood[]>([]);
   const [editingFood, setEditingFood] = useState<IFood>({} as IFood);
   const [modalOpen, setModalOpen] = useState(false);
@@ -20,7 +22,11 @@ export default function Admin() {
     setLoading(true);
 
     async function getFoods() {
-      const { data } = await api.get("/foods");
+      const { data } = await api.get("/foods", {
+        headers: {
+          Authorization: `Bearer ${tokenUser}`,
+        },
+      });
 
       if (data) {
         setLoading(false);
@@ -29,16 +35,24 @@ export default function Admin() {
     }
     getFoods();
     setLoading(false);
-  }, []);
+  }, [tokenUser]);
 
   const handleAddFood = async (
     food: Omit<IFood, "id" | "available">
   ): Promise<void> => {
     try {
-      const { data } = await api.post("/foods", {
-        ...food,
-        available: true,
-      });
+      const { data } = await api.post(
+        "/foods",
+        {
+          ...food,
+          available: true,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${tokenUser}`,
+          },
+        }
+      );
 
       if (data) {
         setFoods([...foods, data]);
@@ -63,7 +77,11 @@ export default function Admin() {
         image: food.image,
       };
 
-      const { data } = await api.put(`/foods/${editingFood.id}`, newData);
+      const { data } = await api.put(`/foods/${editingFood.id}`, newData, {
+        headers: {
+          Authorization: `Bearer ${tokenUser}`,
+        },
+      });
 
       if (data) {
         const foodsUpdated = foods.map((f) =>
@@ -79,7 +97,11 @@ export default function Admin() {
   };
 
   const handleDeleteFood = async (id: number) => {
-    const { data } = await api.delete(`/foods/${id}`);
+    const { data } = await api.delete(`/foods/${id}`, {
+      headers: {
+        Authorization: `Bearer ${tokenUser}`,
+      },
+    });
 
     const foodsFiltered = foods.filter((food) => food.id !== id);
 

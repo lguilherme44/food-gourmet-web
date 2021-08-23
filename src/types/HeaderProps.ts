@@ -1,3 +1,3 @@
 export default interface HeaderProps {
-  openModal: () => void;
+  openModal?: () => void;
 }

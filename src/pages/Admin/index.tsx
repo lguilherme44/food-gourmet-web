@@ -33,8 +33,11 @@ export default function Admin() {
         setFoods(data);
       }
     }
-    getFoods();
-    setLoading(false);
+
+    if (tokenUser) {
+      getFoods();
+      setLoading(false);
+    }
   }, [tokenUser]);
 
   const handleAddFood = async (

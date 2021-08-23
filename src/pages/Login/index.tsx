@@ -6,13 +6,11 @@ import { FiLogIn } from "react-icons/fi";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { HiOutlineMail } from "react-icons/hi";
 import { useAuth } from "../../hooks/useAuth";
-import { useHistory } from "react-router-dom";
 import Input from "../../components/Input";
 import ReactLoading from "react-loading";
 import toast from "react-hot-toast";
 
 const Login: React.FC = () => {
-  const history = useHistory();
   const formRef = useRef<FormHandles>(null);
   const { handleLogin, isLoading } = useAuth();
 
@@ -28,8 +26,6 @@ const Login: React.FC = () => {
       });
 
       handleLogin(data.email, data.password);
-
-      history.push("/admin");
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         err.inner.forEach((error) => {

@@ -4,20 +4,30 @@ import api from "../../services/api";
 import { useState } from "react";
 import FoodProps from "../../types/FoodProps";
 import toast from "react-hot-toast";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function Food({
   food,
   handleEditFood,
   handleDelete,
 }: FoodProps) {
+  const { tokenUser } = useAuth();
   const { available } = food;
   const [isAvaliable, setIsAvaliable] = useState(available);
 
   const toggleAvailable = async () => {
-    await api.put(`/foods/${food.id}`, {
-      ...food,
-      available: !isAvaliable,
-    });
+    await api.put(
+      `/foods/${food.id}`,
+      {
+        ...food,
+        available: !isAvaliable,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${tokenUser}`,
+        },
+      }
+    );
 
     setIsAvaliable(!isAvaliable);
     !isAvaliable

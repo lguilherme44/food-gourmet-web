@@ -4,6 +4,7 @@ import { Form } from "./styles";
 import Modal from "../Modal";
 import Input from "../Input";
 import EditFood from "../../types/EditFood";
+import InputImage from "../InputImage";
 
 interface ModalEditFoodProps {
   isOpen: boolean;
@@ -28,8 +29,8 @@ export default function ModalEditFood({
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
       <Form ref={formRef} onSubmit={handleSubmit} initialData={editingFood}>
-        <h1>Editar Prato</h1>
-        <Input name="image" placeholder="Cole o link aqui" />
+        <h1>Editar Produto</h1>
+        <InputImage name="image" placeholder="Selecione a imagem" />
 
         <Input name="name" placeholder="Ex: Moda Italiana" />
         <Input name="price" placeholder="Ex: 19.90" />
@@ -37,7 +38,7 @@ export default function ModalEditFood({
         <Input name="description" placeholder="Descrição" />
 
         <button type="submit" data-testid="edit-food-button">
-          <div className="text">Editar Prato</div>
+          <div className="text">Editar Produto</div>
           <div className="icon">
             <FiCheckSquare size={24} />
           </div>

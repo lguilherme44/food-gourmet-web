@@ -1,5 +1,7 @@
 import { ChangeEvent, useRef, useEffect, useCallback, useState } from "react";
 import { useField } from "@unform/core";
+import { Container } from "./styles";
+
 interface Props {
   name: string;
 }
@@ -8,6 +10,17 @@ export default function ImageInput({ name, ...rest }: InputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const { fieldName, registerField, defaultValue } = useField(name);
   const [preview, setPreview] = useState(defaultValue);
+  const [isFocused, setIsFocused] = useState(false);
+  const [isFilled, setIsFilled] = useState(false);
+  const handleInputFocus = useCallback(() => {
+    setIsFocused(true);
+  }, []);
+  const handleInputBlur = useCallback(() => {
+    setIsFocused(false);
+
+    setIsFilled(!!inputRef.current?.value);
+  }, []);
+
   const handlePreview = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) {
@@ -16,6 +29,7 @@ export default function ImageInput({ name, ...rest }: InputProps) {
     const previewURL = URL.createObjectURL(file);
     setPreview(previewURL);
   }, []);
+
   useEffect(() => {
     registerField({
       name: fieldName,
@@ -31,9 +45,16 @@ export default function ImageInput({ name, ...rest }: InputProps) {
     });
   }, [fieldName, registerField]);
   return (
-    <>
+    <Container isFilled={isFilled} isFocused={isFocused}>
       {preview && <img src={preview} alt="Preview" width="100" />}
-      <input type="file" ref={inputRef} onChange={handlePreview} {...rest} />
-    </>
+      <input
+        type="file"
+        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
+        ref={inputRef}
+        onChange={handlePreview}
+        {...rest}
+      />
+    </Container>
   );
 }

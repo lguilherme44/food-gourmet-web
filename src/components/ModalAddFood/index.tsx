@@ -52,12 +52,8 @@ export default function ModalAddFood({
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
       <Form ref={formRef} onSubmit={handleSubmit}>
-        <h1>Novo Prato</h1>
-        <InputImage
-          name="image"
-          placeholder="Link da imagem"
-          // icon={FiImage}
-        />
+        <h1>Novo Produto</h1>
+        <InputImage name="image" placeholder="Selecione a imagem" />
 
         <Input name="name" placeholder="Titulo" icon={MdTitle} />
         <Input name="price" placeholder="Valor" icon={FiDollarSign} />
@@ -68,7 +64,7 @@ export default function ModalAddFood({
           icon={MdDescription}
         />
         <button type="submit" data-testid="add-food-button">
-          <p className="text">Adicionar Prato</p>
+          <p className="text">Adicionar Produto</p>
           <div className="icon">
             <FiCheckSquare size={24} />
           </div>

@@ -12,7 +12,7 @@ export default function Header({ openModal }: HeaderProps) {
         {isLogged && (
           <>
             <button type="button" onClick={openModal}>
-              <div className="text">Novo Prato</div>
+              <div className="text">Novo Produto</div>
               <div className="icon">
                 <FiPlusSquare size={24} />
               </div>

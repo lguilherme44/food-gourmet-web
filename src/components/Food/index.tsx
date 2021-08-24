@@ -31,8 +31,8 @@ export default function Food({
 
     setIsAvaliable(!isAvaliable);
     !isAvaliable
-      ? toast.success("Prato ativado")
-      : toast.error("Prato desativado");
+      ? toast.success("Produto ativado")
+      : toast.error("Produto desativado");
   };
 
   const setEditingFood = () => {

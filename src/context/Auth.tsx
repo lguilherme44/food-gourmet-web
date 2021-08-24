@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { createContext, ReactNode } from "react";
 import toast from "react-hot-toast";
 import api from "../services/api";
+import usePersistedState from "../services/usePersistentState";
 
 interface AuthContextProps {
   children: ReactNode;
@@ -12,7 +13,7 @@ interface AuthContextType {
   handleLogout: () => {};
   isLogged: boolean;
   isLoading: boolean;
-  tokenUser: string;
+  tokenUser: string | null;
 }
 
 const AuthContext = createContext({} as AuthContextType);
@@ -20,26 +21,30 @@ const AuthContext = createContext({} as AuthContextType);
 export function AuthProvider({ children }: AuthContextProps) {
   const [isLogged, setIsLogged] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [tokenUser, setTokenAuth] = useState("");
+  const [tokenUser, setTokenAuth] = usePersistedState<string | null>(
+    "token",
+    null
+  );
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    if (token) {
-      setTokenAuth(token);
+    if (tokenUser !== null || "") {
+      console.log(tokenUser);
+      setTokenAuth(tokenUser);
+      setIsLogged(true);
     }
-  }, [isLogged]);
+  }, [tokenUser]);
 
   const handleLogin = async (email: string, password: string) => {
     setIsLoading(true);
 
     try {
-      const { data } = await api.post("sessions", {
+      const { data } = await api.post("login", {
         email,
         password,
       });
 
       localStorage.setItem("token", data.token);
+      setTokenAuth(data.token);
       setIsLogged(true);
       setIsLoading(false);
       toast.success("Login efetuado com sucesso.");

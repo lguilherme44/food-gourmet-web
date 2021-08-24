@@ -17,7 +17,7 @@ export default function Food({
 
   const toggleAvailable = async () => {
     await api.put(
-      `/foods/${food.id}`,
+      `/food/${food.id}`,
       {
         ...food,
         available: !isAvaliable,

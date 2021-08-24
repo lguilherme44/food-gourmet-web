@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { FiCheckSquare, FiImage, FiDollarSign } from "react-icons/fi";
+import { FiCheckSquare, FiDollarSign } from "react-icons/fi";
 import { MdDescription, MdTitle } from "react-icons/md";
 import { Form } from "./styles";
 import Modal from "../Modal";

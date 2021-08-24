@@ -28,8 +28,6 @@ export function AuthProvider({ children }: AuthContextProps) {
 
   useEffect(() => {
     if (tokenUser !== null || "") {
-      console.log(tokenUser);
-      setTokenAuth(tokenUser);
       setIsLogged(true);
     }
   }, [tokenUser]);

@@ -43,27 +43,17 @@ export default function Admin() {
   const handleAddFood = async (
     food: Omit<IFood, "id" | "available">
   ): Promise<void> => {
-    try {
-      const { data } = await api.post(
-        "/foods",
-        {
-          ...food,
-          available: true,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${tokenUser}`,
-          },
-        }
-      );
+    const data = new FormData();
+    data.append("name", food.name);
+    data.append("description", food.description);
+    data.append("price", food.price.toString());
+    data.append("image", food.image);
 
-      if (data) {
-        setFoods([...foods, data]);
-        toast.success(data.message);
-      }
-    } catch (err) {
-      toast.error(err);
-    }
+    api.post("/foods", data, {
+      headers: {
+        Authorization: `Bearer ${tokenUser}`,
+      },
+    });
   };
 
   const handleUpdateFood = async (

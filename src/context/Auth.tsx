@@ -1,20 +1,9 @@
 import { useEffect, useState } from "react";
-import { createContext, ReactNode } from "react";
+import { createContext } from "react";
 import toast from "react-hot-toast";
 import api from "../services/api";
 import usePersistedState from "../services/usePersistentState";
-
-interface AuthContextProps {
-  children: ReactNode;
-}
-
-interface AuthContextType {
-  handleLogin: (email: string, password: string) => {};
-  handleLogout: () => {};
-  isLogged: boolean;
-  isLoading: boolean;
-  tokenUser: string | null;
-}
+import { AuthContextType, AuthContextProps } from "../types/AuthContextType";
 
 const AuthContext = createContext({} as AuthContextType);
 

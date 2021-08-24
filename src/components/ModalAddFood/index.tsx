@@ -8,6 +8,7 @@ import AddFood from "../../types/AddFood";
 import * as Yup from "yup";
 import toast from "react-hot-toast";
 import { FormHandles, SubmitHandler } from "@unform/core";
+import InputImage from "../InputImage";
 
 interface ModalAddFoodProps {
   isOpen: boolean;
@@ -24,18 +25,18 @@ export default function ModalAddFood({
 
   const handleSubmit: SubmitHandler<AddFood> = async (data) => {
     try {
-      formRef.current?.setErrors({});
+      // formRef.current?.setErrors({});
 
-      const schema = Yup.object().shape({
-        image: Yup.string().required(),
-        name: Yup.string().required(),
-        price: Yup.string().required(),
-        description: Yup.string().required(),
-      });
+      // const schema = Yup.object().shape({
+      //   image: Yup.string().required(),
+      //   name: Yup.string().required(),
+      //   price: Yup.string().required(),
+      //   description: Yup.string().required(),
+      // });
 
-      await schema.validate(data, {
-        abortEarly: false,
-      });
+      // await schema.validate(data, {
+      //   abortEarly: false,
+      // });
 
       handleAddFood(data);
       setIsOpen();
@@ -52,7 +53,11 @@ export default function ModalAddFood({
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
       <Form ref={formRef} onSubmit={handleSubmit}>
         <h1>Novo Prato</h1>
-        <Input name="image" placeholder="Link da imagem" icon={FiImage} />
+        <InputImage
+          name="image"
+          placeholder="Link da imagem"
+          // icon={FiImage}
+        />
 
         <Input name="name" placeholder="Titulo" icon={MdTitle} />
         <Input name="price" placeholder="Valor" icon={FiDollarSign} />

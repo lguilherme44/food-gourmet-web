@@ -80,7 +80,7 @@ export default function Admin() {
         image: food.image,
       };
 
-      const { data } = await api.put(`/foods/${editingFood.id}`, newData, {
+      const { data } = await api.put(`/food/${editingFood.id}`, newData, {
         headers: {
           Authorization: `Bearer ${tokenUser}`,
         },
@@ -100,7 +100,7 @@ export default function Admin() {
   };
 
   const handleDeleteFood = async (id: number) => {
-    const { data } = await api.delete(`/foods/${id}`, {
+    const { data } = await api.delete(`/food/${id}`, {
       headers: {
         Authorization: `Bearer ${tokenUser}`,
       },

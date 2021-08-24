@@ -1,19 +1,43 @@
-import { Switch, BrowserRouter } from "react-router-dom";
+import { Switch, Router, Route, Redirect, RouteProps } from "react-router-dom";
 import Login from "../pages/Login";
 import Admin from "../pages/Admin";
 import Home from "../pages/Home";
 
-import RouteAuthenticated from "./RouteAuthenticated";
-import RouteUnauthenticated from "./RouteUnauthenticated";
+import { useAuth } from "../hooks/useAuth";
+import history from "../services/history";
 
-const Routes = () => (
-  <BrowserRouter>
-    <Switch>
-      <RouteUnauthenticated path="/" exact component={Login} />
-      <RouteUnauthenticated path="/home" exact component={Home} />
-      <RouteAuthenticated path="/admin" component={Admin} />
-    </Switch>
-  </BrowserRouter>
-);
+export default function Routes() {
+  interface PropsCustomRoute extends RouteProps {
+    isPrivate?: boolean;
+    admin?: boolean;
+  }
 
-export default Routes;
+  const CustomRoute: React.FC<PropsCustomRoute> = ({
+    isPrivate = false,
+    admin = false,
+    ...rest
+  }) => {
+    const { isLogged } = useAuth();
+
+    if (isLogged && rest.path === "/") {
+      return <Redirect to="/admin" />;
+    }
+
+    if (isPrivate && !isLogged) {
+      return <Redirect to="/" />;
+    }
+
+    return <Route {...rest} />;
+  };
+
+  return (
+    <Router history={history}>
+      <Switch>
+        <CustomRoute exact path="/" component={Login} />
+        <CustomRoute path="/home" component={Home} />
+
+        <CustomRoute isPrivate path="/admin" component={Admin} />
+      </Switch>
+    </Router>
+  );
+}

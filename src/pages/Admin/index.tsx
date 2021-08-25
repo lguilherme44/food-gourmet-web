@@ -66,24 +66,28 @@ export default function Admin() {
   const handleUpdateFood = async (
     food: Omit<IFood, "id" | "available">
   ): Promise<void> => {
+    setLoading(true);
     try {
+      const dataForm = new FormData();
+
       const { available } = editingFood;
 
-      const newData = {
-        name: food.name,
-        description: food.description,
-        price: food.price,
-        available: available,
-        image: food.image,
-      };
+      const newAvailable = available ? "true" : "false";
 
-      const { data } = await api.put(`/food/${editingFood.id}`, newData, {
+      dataForm.append("name", food.name);
+      dataForm.append("description", food.description);
+      dataForm.append("price", food.price.toString());
+      dataForm.append("image", food.image);
+      dataForm.append("available", newAvailable.toString());
+
+      const { data } = await api.put(`/food/${editingFood.id}`, dataForm, {
         headers: {
           Authorization: `Bearer ${tokenUser}`,
         },
       });
 
       if (data) {
+        setLoading(false);
         const foodsUpdated = foods.map((f) =>
           f.id !== data.data.id ? f : data.data
         );

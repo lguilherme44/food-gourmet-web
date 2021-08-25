@@ -36,7 +36,7 @@ export default function Routes() {
         <CustomRoute exact path="/" component={Login} />
         <CustomRoute path="/home" component={Home} />
 
-        <CustomRoute isPrivate path="/admin" component={Admin} />
+        <CustomRoute isPrivate path="/admin" admin component={Admin} />
       </Switch>
     </Router>
   );

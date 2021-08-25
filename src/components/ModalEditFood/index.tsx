@@ -1,16 +1,14 @@
-import { useRef } from "react";
 import { FiCheckSquare } from "react-icons/fi";
 import { Form } from "./styles";
 import Modal from "../Modal";
-import Input from "../Input";
 import EditFood from "../../types/EditFood";
-import InputImage from "../InputImage";
+import { useForm } from "react-hook-form";
 
 interface ModalEditFoodProps {
   isOpen: boolean;
   setIsOpen: () => void;
   handleUpdateFood: (data: EditFood) => void;
-  editingFood: Record<string, any> | undefined;
+  editingFood: EditFood;
 }
 
 export default function ModalEditFood({
@@ -19,23 +17,48 @@ export default function ModalEditFood({
   handleUpdateFood,
   editingFood,
 }: ModalEditFoodProps) {
-  const formRef = useRef(null);
+  const { register, handleSubmit } = useForm<EditFood>();
 
-  const handleSubmit = async (data: EditFood) => {
+  const handleSubmitForm = handleSubmit((data) => {
     handleUpdateFood(data);
     setIsOpen();
-  };
+  });
 
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
-      <Form ref={formRef} onSubmit={handleSubmit} initialData={editingFood}>
+      <Form onSubmit={handleSubmitForm}>
         <h1>Editar Produto</h1>
-        <InputImage name="image" placeholder="Selecione a imagem" />
+        {editingFood.image && (
+          <>
+            <img
+              src={editingFood.image}
+              width="150"
+              height="150"
+              alt="Imagem Produto"
+            />
+          </>
+        )}
 
-        <Input name="name" placeholder="Ex: Moda Italiana" />
-        <Input name="price" placeholder="Ex: 19.90" />
+        <input {...register("image")} type="file" />
 
-        <Input name="description" placeholder="Descrição" />
+        <input
+          placeholder="Titulo"
+          defaultValue={editingFood.name}
+          {...register("name")}
+        />
+        <input
+          placeholder="Valor"
+          defaultValue={editingFood.price}
+          {...register("price")}
+          type="number"
+          step=".01"
+        />
+
+        <textarea
+          placeholder="Descrição"
+          defaultValue={editingFood.description}
+          {...register("description")}
+        />
 
         <button type="submit" data-testid="edit-food-button">
           <div className="text">Editar Produto</div>

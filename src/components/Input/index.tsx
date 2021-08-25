@@ -1,15 +1,15 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
-import { useField } from "@unform/core";
+import { useState, useCallback, useRef } from "react";
 import { Container } from "./styles";
 import PropsInput from "../../types/PropsInput";
+import { useForm } from "react-hook-form";
 
 type InputProps = JSX.IntrinsicElements["input"] & PropsInput;
 
 const Input = ({ name, icon: Icon, ...rest }: InputProps) => {
+  const { register } = useForm();
   const inputRef = useRef<HTMLInputElement>(null);
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
-  const { fieldName, defaultValue, registerField, error } = useField(name);
   const handleInputFocus = useCallback(() => {
     setIsFocused(true);
   }, []);
@@ -19,13 +19,7 @@ const Input = ({ name, icon: Icon, ...rest }: InputProps) => {
     setIsFilled(!!inputRef.current?.value);
   }, []);
 
-  useEffect(() => {
-    registerField({
-      name: fieldName,
-      ref: inputRef.current,
-      path: "value",
-    });
-  }, [fieldName, registerField]);
+  console.log(name);
 
   return (
     <Container isFilled={isFilled} isFocused={isFocused}>
@@ -33,14 +27,11 @@ const Input = ({ name, icon: Icon, ...rest }: InputProps) => {
 
       <input
         onFocus={handleInputFocus}
-        onBlur={handleInputBlur}
-        defaultValue={defaultValue}
-        ref={inputRef}
-        className={error ? "has-error" : ""}
+        // onBlur={handleInputBlur}
+        // ref={inputRef}
+        {...register(name)}
         {...rest}
       />
-
-      {error && <span className="error">{error}</span>}
     </Container>
   );
 };

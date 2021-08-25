@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import * as Yup from "yup";
 import { FormHandles, SubmitHandler } from "@unform/core";
 import { Form, Container, Main } from "./styles";
 import { FiLogIn } from "react-icons/fi";
@@ -16,23 +15,8 @@ const Login: React.FC = () => {
 
   const handleSubmit: SubmitHandler = async (data) => {
     try {
-      const schema = Yup.object().shape({
-        email: Yup.string().required(),
-        password: Yup.string().required(),
-      });
-
-      await schema.validate(data, {
-        abortEarly: false,
-      });
-
       handleLogin(data.email, data.password);
-    } catch (err) {
-      if (err instanceof Yup.ValidationError) {
-        err.inner.forEach((error) => {
-          toast.error(error.message);
-        });
-      }
-    }
+    } catch (err) {}
   };
 
   return (

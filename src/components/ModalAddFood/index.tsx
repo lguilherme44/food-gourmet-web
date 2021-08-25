@@ -1,14 +1,8 @@
-import { useRef } from "react";
-import { FiCheckSquare, FiDollarSign } from "react-icons/fi";
-import { MdDescription, MdTitle } from "react-icons/md";
+import { FiCheckSquare } from "react-icons/fi";
 import { Form } from "./styles";
 import Modal from "../Modal";
-import Input from "../Input";
 import AddFood from "../../types/AddFood";
-import * as Yup from "yup";
-import toast from "react-hot-toast";
-import { FormHandles, SubmitHandler } from "@unform/core";
-import InputImage from "../InputImage";
+import { useForm } from "react-hook-form";
 
 interface ModalAddFoodProps {
   isOpen: boolean;
@@ -21,48 +15,37 @@ export default function ModalAddFood({
   setIsOpen,
   handleAddFood,
 }: ModalAddFoodProps) {
-  const formRef = useRef<FormHandles>(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<AddFood>();
 
-  const handleSubmit: SubmitHandler<AddFood> = async (data) => {
-    try {
-      // formRef.current?.setErrors({});
-
-      // const schema = Yup.object().shape({
-      //   image: Yup.string().required(),
-      //   name: Yup.string().required(),
-      //   price: Yup.string().required(),
-      //   description: Yup.string().required(),
-      // });
-
-      // await schema.validate(data, {
-      //   abortEarly: false,
-      // });
-
-      handleAddFood(data);
-      setIsOpen();
-    } catch (err) {
-      if (err instanceof Yup.ValidationError) {
-        err.inner.forEach((error) => {
-          toast.error(error.message);
-        });
-      }
-    }
-  };
+  const handleSubmitForm = handleSubmit((data) => {
+    handleAddFood(data);
+    setIsOpen();
+  });
 
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
-      <Form ref={formRef} onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmitForm}>
         <h1>Novo Produto</h1>
-        <InputImage name="image" placeholder="Selecione a imagem" />
 
-        <Input name="name" placeholder="Titulo" icon={MdTitle} />
-        <Input name="price" placeholder="Valor" icon={FiDollarSign} />
+        <input {...register("image", { required: true })} type="file" />
+        {errors.image && <strong>Imagem obrigatória</strong>}
 
-        <Input
-          name="description"
-          placeholder="Descrição"
-          icon={MdDescription}
+        <input {...register("name", { required: true })} placeholder="Titulo" />
+        {errors.name && <strong>Titulo obrigatório</strong>}
+
+        <input
+          {...register("price", { required: true })}
+          placeholder="Valor"
+          type="number"
+          step=".01"
         />
+        {errors.price && <strong>Valor obrigatório</strong>}
+
+        <textarea {...register("description")} placeholder="Descrição" />
         <button type="submit" data-testid="add-food-button">
           <p className="text">Adicionar Produto</p>
           <div className="icon">

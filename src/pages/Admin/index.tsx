@@ -48,8 +48,9 @@ export default function Admin() {
     data.append("name", food.name);
     data.append("description", food.description);
     data.append("price", food.price.toString());
-    data.append("image", food.image);
+    data.append("image", food.image[0]);
 
+    // console.log(food.image[0]);
     const { data: dataAPI } = await api.post("/foods", data, {
       headers: {
         Authorization: `Bearer ${tokenUser}`,
@@ -58,8 +59,8 @@ export default function Admin() {
 
     if (dataAPI) {
       setFoods([...foods, dataAPI]);
-      toast.success("Registro inserido com sucesso.");
       setLoading(false);
+      toast.success("Registro inserido com sucesso.");
     }
   };
 
@@ -77,8 +78,10 @@ export default function Admin() {
       dataForm.append("name", food.name);
       dataForm.append("description", food.description);
       dataForm.append("price", food.price.toString());
-      dataForm.append("image", food.image);
       dataForm.append("available", newAvailable.toString());
+      dataForm.append("image", food.image[0]);
+
+      console.log(food);
 
       const { data } = await api.put(`/food/${editingFood.id}`, dataForm, {
         headers: {

@@ -22,8 +22,10 @@ export default function Home() {
       });
 
       if (data) {
+        const newData = data.filter((item: IFood) => item.available !== false);
+
         setLoading(false);
-        setFoods(data);
+        setFoods(newData);
       }
     }
     getFoods();

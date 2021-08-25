@@ -48,7 +48,7 @@ export const Form = styled.form`
   }
 
   button {
-    margin-top: 48px;
+    margin-top: 20px;
     align-self: flex-start;
   }
 

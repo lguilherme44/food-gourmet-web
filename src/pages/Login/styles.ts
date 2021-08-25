@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Form as Unform } from "@unform/web";
 
 export const Main = styled.div`
   width: 100%;
@@ -13,13 +12,30 @@ export const Main = styled.div`
 
   background: #131416;
   background-size: cover;
+
+  input,
+  textarea {
+    flex: 1;
+    background: transparent;
+    border: 0;
+    color: #b7b7cc;
+    padding: 15px;
+    background: #fff;
+    border-radius: 8px;
+    margin-top: 24px;
+    font-size: 1rem;
+
+    &::placeholder {
+      color: #b7b7cc;
+    }
+  }
 `;
 
 export const Container = styled.div`
   background: #131416;
 `;
 
-export const Form = styled(Unform)`
+export const Form = styled.form`
   padding: 48px 40px;
   display: flex;
   flex-direction: column;

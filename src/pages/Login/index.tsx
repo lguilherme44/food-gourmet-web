@@ -1,36 +1,39 @@
-import React, { useRef } from "react";
-import { FormHandles, SubmitHandler } from "@unform/core";
 import { Form, Container, Main } from "./styles";
 import { FiLogIn } from "react-icons/fi";
-import { RiLockPasswordLine } from "react-icons/ri";
-import { HiOutlineMail } from "react-icons/hi";
 import { useAuth } from "../../hooks/useAuth";
-import Input from "../../components/Input";
 import ReactLoading from "react-loading";
-import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
 
 const Login: React.FC = () => {
-  const formRef = useRef<FormHandles>(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   const { handleLogin, isLoading } = useAuth();
 
-  const handleSubmit: SubmitHandler = async (data) => {
-    try {
-      handleLogin(data.email, data.password);
-    } catch (err) {}
-  };
+  const handleSubmitForm = handleSubmit((data) => {
+    handleLogin(data.email, data.password);
+  });
 
   return (
     <Container>
       <Main>
-        <Form ref={formRef} onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmitForm}>
           <h1>Food Gourmet</h1>
-          <Input name="email" placeholder="E-mail" icon={HiOutlineMail} />
-          <Input
-            name="password"
+          <input
+            {...register("email", { required: true })}
+            placeholder="E-mail"
+          />
+          {errors.email && <strong>E-mail obrigatório</strong>}
+
+          <input
+            {...register("password", { required: true })}
             type="password"
             placeholder="Password"
-            icon={RiLockPasswordLine}
           />
+          {errors.password && <strong>Password obrigatório</strong>}
 
           {isLoading ? (
             <ReactLoading

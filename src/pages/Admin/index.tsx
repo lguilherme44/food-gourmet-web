@@ -1,8 +1,8 @@
 import Header from "../../components/Header";
 import api from "../../services/api";
 import Food from "../../components/Food";
-import ModalAddFood from "../../components/ModalAddFood";
-import ModalEditFood from "../../components/ModalEditFood";
+import ModalAdd from "../../components/ModalAdd";
+import ModalEdit from "../../components/ModalEdit";
 import { FoodsContainer } from "./styles";
 import { useState, useEffect } from "react";
 import IFood from "../../types/IFood";
@@ -134,12 +134,12 @@ export default function Admin() {
   return (
     <>
       <Header openModal={toggleModal} />
-      <ModalAddFood
+      <ModalAdd
         isOpen={modalOpen}
         setIsOpen={toggleModal}
         handleAddFood={handleAddFood}
       />
-      <ModalEditFood
+      <ModalEdit
         isOpen={editModalOpen}
         setIsOpen={toggleEditModal}
         editingFood={editingFood}

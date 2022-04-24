@@ -1,7 +1,6 @@
 import { Form, Container, Main } from "./styles";
 import { FiLogIn } from "react-icons/fi";
 import { useAuth } from "../../hooks/useAuth";
-import ReactLoading from "react-loading";
 import { useForm } from "react-hook-form";
 
 const Login: React.FC = () => {

@@ -98,7 +98,7 @@ export default function Admin() {
         setFoods(foodsUpdated);
         toast.success(data.message);
       }
-    } catch (err) {
+    } catch (err: any) {
       toast.error(err);
     }
   };

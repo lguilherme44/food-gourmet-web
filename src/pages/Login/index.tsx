@@ -35,23 +35,12 @@ const Login: React.FC = () => {
           />
           {errors.password && <strong>Password obrigatório</strong>}
 
-          {isLoading ? (
-            <ReactLoading
-              type={"spinningBubbles"}
-              color={"#fff"}
-              height={35}
-              width={35}
-            />
-          ) : (
-            <>
-              <button type="submit" data-testid="add-food-button">
-                <p className="text">Entrar</p>
-                <div className="icon">
-                  <FiLogIn size={24} />
-                </div>
-              </button>
-            </>
-          )}
+          <button type="submit" data-testid="add-food-button">
+            <p className="text">{isLoading ? "Carregando..." : "Entrar"}</p>
+            <div className="icon">
+              <FiLogIn size={24} />
+            </div>
+          </button>
         </Form>
       </Main>
     </Container>

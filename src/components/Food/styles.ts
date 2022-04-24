@@ -17,7 +17,7 @@ export const Container = styled.div`
 
   header {
     background: transparent;
-    /* height: 192px; */
+    max-height: 200px;
     overflow: hidden;
     transition: 0.3s opacity;
     text-align: center;
@@ -32,6 +32,7 @@ export const Container = styled.div`
       pointer-events: none;
       user-select: none;
       width: 100%;
+      height: 100%;
       border-radius: 5% 5% 0 0;
     }
   }

@@ -16,7 +16,7 @@ export const Container = styled.div`
       font-weight: 600;
       border-radius: 8px;
       border: 0;
-      background: #9bc53d;
+      background: ${({ theme }) => theme.colors.primary};
       color: #fff;
 
       display: flex;
@@ -30,9 +30,12 @@ export const Container = styled.div`
       .icon {
         display: flex;
         padding: 16px 16px;
-        background: #81a532;
+        background: ${({ theme }) => theme.colors.primary};
         border-radius: 8px;
+        /* border-top-left-radius: 0;
+        border-bottom-left-radius: 0; */
         margin: 0 auto;
+        filter: brightness(0.75);
       }
     }
   }
@@ -42,7 +45,7 @@ export const Container = styled.div`
       font-weight: 600;
       border-radius: 8px;
       border: 0;
-      background: #9bc53d;
+      background: ${({ theme }) => theme.colors.primary};
       color: #fff;
 
       display: flex;
